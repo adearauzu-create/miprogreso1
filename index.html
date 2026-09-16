@@ -1,0 +1,1843 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="theme-color" content="#8ecae6">
+    <meta name="description" content="Mi plan personal de alimentación, ayuno, ejercicio y progreso.">
+
+    <link rel="manifest" href="manifest.json">
+
+    <title>Mi Progreso</title>
+
+    <style>
+        * {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+        }
+
+        body {
+            font-family: Arial, sans-serif;
+            background: #eef8fc;
+            color: #263238;
+            padding-bottom: 90px;
+        }
+
+        header {
+            background: linear-gradient(135deg, #8ecae6, #bde0fe);
+            padding: 25px 20px 35px;
+            border-radius: 0 0 30px 30px;
+        }
+
+        header p {
+            font-size: 14px;
+            color: #35505c;
+            margin-bottom: 6px;
+        }
+
+        header h1 {
+            font-size: 28px;
+            margin-bottom: 5px;
+        }
+
+        .date {
+            font-size: 14px;
+            color: #48636d;
+        }
+
+        .container {
+            max-width: 600px;
+            margin: -18px auto 0;
+            padding: 0 16px;
+        }
+
+        .card {
+            background: white;
+            border-radius: 22px;
+            padding: 20px;
+            margin-bottom: 16px;
+            box-shadow: 0 5px 18px rgba(40, 90, 110, 0.08);
+        }
+
+        .card-title {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 16px;
+        }
+
+        .card-title h2 {
+            font-size: 18px;
+        }
+
+        .small {
+            font-size: 13px;
+            color: #78909c;
+        }
+
+        /* AYUNO */
+
+        .fasting-card {
+            text-align: center;
+        }
+
+        .status {
+            display: inline-block;
+            padding: 7px 14px;
+            border-radius: 20px;
+            background: #e3f2fd;
+            color: #1976a3;
+            font-size: 13px;
+            font-weight: bold;
+            margin-bottom: 15px;
+        }
+
+        .timer {
+            font-size: 42px;
+            font-weight: bold;
+            letter-spacing: 2px;
+            margin: 8px 0;
+        }
+
+        .timer-label {
+            color: #78909c;
+            font-size: 13px;
+            margin-bottom: 18px;
+        }
+
+        .progress-track {
+            height: 10px;
+            background: #e8f0f3;
+            border-radius: 10px;
+            overflow: hidden;
+        }
+
+        .progress-fill {
+            height: 100%;
+            width: 0%;
+            background: linear-gradient(90deg, #48cae4, #219ebc);
+            border-radius: 10px;
+            transition: width .5s;
+        }
+
+        .fast-info {
+            display: flex;
+            justify-content: space-between;
+            margin-top: 12px;
+            font-size: 12px;
+            color: #78909c;
+        }
+
+        /* SIGUIENTE EVENTO */
+
+        .next-event {
+            display: flex;
+            align-items: center;
+            gap: 15px;
+        }
+
+        .event-icon {
+            width: 50px;
+            height: 50px;
+            background: #e3f6fb;
+            border-radius: 15px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 24px;
+        }
+
+        .next-event h3 {
+            font-size: 16px;
+            margin-bottom: 4px;
+        }
+
+        /* COMIDAS */
+
+        .meal {
+            display: flex;
+            gap: 14px;
+            align-items: flex-start;
+            padding: 14px 0;
+            border-bottom: 1px solid #edf2f4;
+        }
+
+        .meal:last-child {
+            border-bottom: none;
+        }
+
+        .meal-time {
+            font-weight: bold;
+            color: #219ebc;
+            width: 65px;
+            font-size: 14px;
+        }
+
+        .meal-content {
+            flex: 1;
+        }
+
+        .meal-content h3 {
+            font-size: 15px;
+            margin-bottom: 4px;
+        }
+
+        .meal-content p {
+            font-size: 13px;
+            color: #78909c;
+            line-height: 1.4;
+        }
+
+        .check {
+            width: 22px;
+            height: 22px;
+            accent-color: #219ebc;
+        }
+
+        /* AGUA */
+
+        .water-count {
+            text-align: center;
+            font-size: 32px;
+            font-weight: bold;
+            margin: 5px 0;
+        }
+
+        .water-buttons {
+            display: flex;
+            justify-content: center;
+            gap: 10px;
+            margin-top: 12px;
+        }
+
+        button {
+            border: none;
+            cursor: pointer;
+        }
+
+        .water-btn {
+            background: #dff5fb;
+            color: #14718a;
+            padding: 10px 18px;
+            border-radius: 12px;
+            font-weight: bold;
+        }
+
+        /* ENTRENAMIENTO */
+
+        .exercise {
+            padding: 13px 0;
+            border-bottom: 1px solid #edf2f4;
+            display: flex;
+            justify-content: space-between;
+            gap: 10px;
+        }
+
+        .exercise:last-child {
+            border-bottom: none;
+        }
+
+        .exercise h3 {
+            font-size: 14px;
+        }
+
+        .exercise p {
+            font-size: 12px;
+            color: #78909c;
+            margin-top: 3px;
+        }
+
+        /* PROGRESO */
+
+        .weight-box {
+            display: flex;
+            justify-content: space-between;
+            text-align: center;
+            margin: 15px 0;
+        }
+
+        .weight-box div {
+            flex: 1;
+        }
+
+        .weight-number {
+            font-size: 24px;
+            font-weight: bold;
+        }
+
+        .weight-label {
+            color: #78909c;
+            font-size: 12px;
+            margin-top: 4px;
+        }
+
+        .goal-progress {
+            height: 12px;
+            background: #edf2f4;
+            border-radius: 10px;
+            overflow: hidden;
+            margin: 12px 0;
+        }
+
+        .goal-fill {
+            height: 100%;
+            width: 0;
+            background: linear-gradient(90deg, #8ecae6, #219ebc);
+        }
+
+        /* INPUTS */
+
+        input {
+            width: 100%;
+            padding: 12px;
+            border: 1px solid #dce8ec;
+            border-radius: 12px;
+            margin-top: 6px;
+            margin-bottom: 12px;
+            font-size: 15px;
+        }
+
+        label {
+            font-size: 13px;
+            color: #546e7a;
+        }
+
+        .primary-btn {
+            width: 100%;
+            padding: 13px;
+            border-radius: 14px;
+            background: #219ebc;
+            color: white;
+            font-weight: bold;
+            font-size: 15px;
+        }
+
+        .notification-btn {
+            background: #e3f2fd;
+            color: #1976a3;
+        }
+
+        /* PÁGINAS */
+
+        .page {
+            display: none;
+        }
+
+        .page.active {
+            display: block;
+        }
+
+        /* NAV */
+
+        .bottom-nav {
+            position: fixed;
+            bottom: 0;
+            left: 0;
+            right: 0;
+            height: 72px;
+            background: rgba(255,255,255,.96);
+            display: flex;
+            justify-content: space-around;
+            align-items: center;
+            border-top: 1px solid #e6eef1;
+            z-index: 100;
+        }
+
+        .nav-btn {
+            background: transparent;
+            color: #78909c;
+            font-size: 11px;
+            text-align: center;
+        }
+
+        .nav-icon {
+            font-size: 21px;
+            display: block;
+            margin-bottom: 3px;
+        }
+
+        .nav-btn.active {
+            color: #219ebc;
+            font-weight: bold;
+        }
+
+        .day-buttons {
+            display: flex;
+            overflow-x: auto;
+            gap: 8px;
+            margin-bottom: 16px;
+            padding-bottom: 5px;
+        }
+
+        .day-btn {
+            flex-shrink: 0;
+            background: white;
+            border: 1px solid #dcebef;
+            padding: 9px 13px;
+            border-radius: 12px;
+            color: #607d8b;
+        }
+
+        .day-btn.active {
+            background: #219ebc;
+            color: white;
+            border-color: #219ebc;
+        }
+
+        .toast {
+            position: fixed;
+            bottom: 85px;
+            left: 50%;
+            transform: translateX(-50%) translateY(20px);
+            background: #263238;
+            color: white;
+            padding: 13px 18px;
+            border-radius: 14px;
+            opacity: 0;
+            pointer-events: none;
+            transition: .3s;
+            z-index: 200;
+            font-size: 13px;
+            text-align: center;
+            max-width: 90%;
+        }
+
+        .toast.show {
+            opacity: 1;
+            transform: translateX(-50%) translateY(0);
+        }
+
+        @media (min-width: 700px) {
+            body {
+                max-width: 600px;
+                margin: auto;
+            }
+
+            .bottom-nav {
+                max-width: 600px;
+                left: 50%;
+                transform: translateX(-50%);
+            }
+        }
+    </style>
+</head>
+
+<body>
+
+<header>
+    <p>Mi plan personal</p>
+    <h1>Hola, Adelith 👋</h1>
+    <div class="date" id="todayDate"></div>
+</header>
+
+<div class="container">
+
+    <!-- INICIO -->
+    <section id="home" class="page active">
+
+        <div class="card fasting-card">
+            <div class="status" id="fastingStatus">AYUNO</div>
+
+            <div class="timer" id="timer">16:00:00</div>
+
+            <div class="timer-label" id="timerLabel">
+                Tiempo restante de ayuno
+            </div>
+
+            <div class="progress-track">
+                <div class="progress-fill" id="fastProgress"></div>
+            </div>
+
+            <div class="fast-info">
+                <span id="fastStart">9:00 p. m.</span>
+                <span id="fastEnd">1:00 p. m.</span>
+            </div>
+        </div>
+
+        <div class="card">
+            <div class="card-title">
+                <h2>Próximo evento</h2>
+            </div>
+
+            <div class="next-event">
+                <div class="event-icon" id="nextIcon">🍽️</div>
+                <div>
+                    <h3 id="nextTitle">Primera comida</h3>
+                    <p class="small" id="nextTime">1:00 p. m.</p>
+                </div>
+            </div>
+        </div>
+
+        <div class="card">
+            <div class="card-title">
+                <h2>Comidas de hoy</h2>
+                <span class="small">16:8</span>
+            </div>
+
+            <div id="homeMeals"></div>
+        </div>
+
+        <div class="card">
+            <div class="card-title">
+                <h2>💧 Agua</h2>
+                <span class="small">Meta: 2.5 L</span>
+            </div>
+
+            <div class="water-count">
+                <span id="waterCount">0</span> / 10
+            </div>
+
+            <div class="progress-track">
+                <div class="progress-fill" id="waterProgress"></div>
+            </div>
+
+            <div class="water-buttons">
+                <button class="water-btn" onclick="addWater()">+ 250 ml</button>
+                <button class="water-btn" onclick="removeWater()">− 250 ml</button>
+            </div>
+        </div>
+
+    </section>
+
+    <!-- COMIDAS -->
+    <section id="meals" class="page">
+
+        <div class="card">
+            <div class="card-title">
+                <h2>🍗 Plan de comidas</h2>
+            </div>
+
+            <div class="day-buttons" id="mealDays"></div>
+
+            <div id="mealList"></div>
+        </div>
+
+    </section>
+
+    <!-- EJERCICIO -->
+    <section id="exercisePage" class="page">
+
+        <div class="card">
+            <div class="card-title">
+                <h2>🏋️ Entrenamiento</h2>
+            </div>
+
+            <div class="day-buttons" id="exerciseDays"></div>
+
+            <div id="exerciseList"></div>
+        </div>
+
+    </section>
+
+    <!-- PROGRESO -->
+    <section id="progress" class="page">
+
+        <div class="card">
+            <div class="card-title">
+                <h2>📈 Mi progreso</h2>
+            </div>
+
+            <div class="weight-box">
+                <div>
+                    <div class="weight-number" id="startWeight">160</div>
+                    <div class="weight-label">Inicio lb</div>
+                </div>
+
+                <div>
+                    <div class="weight-number" id="currentWeight">160</div>
+                    <div class="weight-label">Actual lb</div>
+                </div>
+
+                <div>
+                    <div class="weight-number" id="goalWeight">140</div>
+                    <div class="weight-label">Meta lb</div>
+                </div>
+            </div>
+
+            <div class="goal-progress">
+                <div class="goal-fill" id="goalFill"></div>
+            </div>
+
+            <p class="small" id="remainingText">
+                20 lb para llegar a tu meta
+            </p>
+        </div>
+
+        <div class="card">
+            <div class="card-title">
+                <h2>Actualizar peso</h2>
+            </div>
+
+            <label>Peso actual (lb)</label>
+            <input type="number" id="newWeight" placeholder="Ej. 158">
+
+            <button class="primary-btn" onclick="saveWeight()">
+                Guardar peso
+            </button>
+        </div>
+
+        <div class="card">
+            <div class="card-title">
+                <h2>Definir meta</h2>
+            </div>
+
+            <label>Peso inicial (lb)</label>
+            <input type="number" id="inputStart" value="160">
+
+            <label>Peso objetivo (lb)</label>
+            <input type="number" id="inputGoal" value="140">
+
+            <button class="primary-btn" onclick="saveGoal()">
+                Guardar meta
+            </button>
+        </div>
+
+    </section>
+
+    <!-- AJUSTES -->
+    <section id="settings" class="page">
+
+        <div class="card">
+            <div class="card-title">
+                <h2>⚙️ Ajustes</h2>
+            </div>
+
+            <label>Inicio del ayuno</label>
+            <input type="time" id="fastStartInput" value="21:00">
+
+            <label>Fin del ayuno</label>
+            <input type="time" id="fastEndInput" value="13:00">
+
+            <button class="primary-btn" onclick="saveFastSettings()">
+                Guardar horario
+            </button>
+        </div>
+
+        <div class="card">
+            <div class="card-title">
+                <h2>🔔 Notificaciones</h2>
+            </div>
+
+            <p class="small" style="margin-bottom:15px;">
+                Recibe avisos cuando comience o termine tu ayuno.
+            </p>
+
+            <button class="primary-btn notification-btn"
+                    onclick="enableNotifications()">
+                Activar notificaciones
+            </button>
+        </div>
+
+        <div class="card">
+            <div class="card-title">
+                <h2>📱 Instalar aplicación</h2>
+            </div>
+
+            <p class="small" style="line-height:1.6;">
+                Puedes instalar esta página en tu celular desde el navegador
+                usando la opción "Agregar a pantalla de inicio".
+            </p>
+        </div>
+
+    </section>
+
+</div>
+
+<!-- NAVEGACIÓN -->
+<nav class="bottom-nav">
+
+    <button class="nav-btn active" onclick="showPage('home', this)">
+        <span class="nav-icon">⌂</span>
+        Inicio
+    </button>
+
+    <button class="nav-btn" onclick="showPage('meals', this)">
+        <span class="nav-icon">🍽️</span>
+        Comidas
+    </button>
+
+    <button class="nav-btn" onclick="showPage('exercisePage', this)">
+        <span class="nav-icon">🏋️</span>
+        Ejercicio
+    </button>
+
+    <button class="nav-btn" onclick="showPage('progress', this)">
+        <span class="nav-icon">📈</span>
+        Progreso
+    </button>
+
+    <button class="nav-btn" onclick="showPage('settings', this)">
+        <span class="nav-icon">⚙️</span>
+        Ajustes
+    </button>
+
+</nav>
+
+<div class="toast" id="toast"></div>
+
+<script>
+
+    /* ==============================
+       DATOS
+    ============================== */
+
+    const meals = {
+        lunes: [
+            ["1:00 p. m.", "Almuerzo", "150 g de pollo + 170 g de arroz + ensalada"],
+            ["4:00 p. m.", "Merienda", "Yogur griego + fresas"],
+            ["6:30 p. m.", "Cena", "150 g de pollo + ensalada"]
+        ],
+
+        martes: [
+            ["1:00 p. m.", "Almuerzo", "150 g de pollo + 170 g de arroz + ensalada"],
+            ["4:00 p. m.", "Merienda", "Manzana + 20 g de almendras"],
+            ["6:30 p. m.", "Cena", "150 g de pollo + vegetales"]
+        ],
+
+        miércoles: [
+            ["1:00 p. m.", "Almuerzo", "150 g de pollo + 150 g de arroz + ensalada"],
+            ["4:00 p. m.", "Merienda", "Yogur griego + banana pequeña"],
+            ["6:30 p. m.", "Cena", "120 g de pollo + 2 huevos + ensalada"]
+        ],
+
+        jueves: [
+            ["1:00 p. m.", "Almuerzo", "150 g de carne magra + 160 g de arroz + ensalada"],
+            ["4:00 p. m.", "Merienda", "2 huevos + fruta"],
+            ["6:30 p. m.", "Cena", "150 g de pollo + vegetales"]
+        ],
+
+        viernes: [
+            ["1:00 p. m.", "Almuerzo", "150 g de pollo + 170 g de arroz + ensalada"],
+            ["4:00 p. m.", "Merienda", "Yogur griego + fresas"],
+            ["6:30 p. m.", "Cena", "150 g de pollo + ensalada"]
+        ],
+
+        sábado: [
+            ["1:00 p. m.", "Almuerzo", "150 g de pollo + 180 g de arroz + ensalada"],
+            ["4:00 p. m.", "Merienda", "Fruta + 20 g de almendras"],
+            ["6:30 p. m.", "Cena", "150 g de carne magra + vegetales"]
+        ],
+
+        domingo: [
+            ["1:00 p. m.", "Almuerzo", "150 g de pollo + 150 g de arroz + ensalada"],
+            ["4:00 p. m.", "Merienda", "Yogur griego + fruta"],
+            ["6:30 p. m.", "Cena", "150 g de pollo + 2 huevos + ensalada"]
+        ]
+    };
+
+
+    const exercises = {
+
+        lunes: [
+            ["Sentadillas", "3 × 12"],
+            ["Hip Thrust", "3 × 12"],
+            ["Peso muerto rumano", "3 × 10"],
+            ["Zancadas", "3 × 10 por pierna"],
+            ["Abducción de cadera", "3 × 15"],
+            ["Caminata", "15 min"]
+        ],
+
+        martes: [
+            ["Remo con mancuernas", "3 × 12"],
+            ["Press de hombros", "3 × 10"],
+            ["Curl de bíceps", "3 × 12"],
+            ["Extensión de tríceps", "3 × 12"],
+            ["Elevaciones laterales", "3 × 15"],
+            ["Cardio", "20 min"]
+        ],
+
+        miércoles: [
+            ["Plancha", "3 × 30–45 seg"],
+            ["Crunch", "3 × 15"],
+            ["Elevación de piernas", "3 × 12"],
+            ["Crunch inverso", "3 × 12"],
+            ["Dead Bug", "3 × 10 por lado"],
+            ["Caminata", "40 min"]
+        ],
+
+        jueves: [
+            ["Sentadillas", "3 × 12"],
+            ["Hip Thrust", "4 × 10"],
+            ["Prensa", "3 × 12"],
+            ["Peso muerto rumano", "3 × 10"],
+            ["Curl femoral", "3 × 12"],
+            ["Cardio ligero", "15 min"]
+        ],
+
+        viernes: [
+            ["Remo", "3 × 12"],
+            ["Press de hombros", "3 × 10"],
+            ["Curl de bíceps", "3 × 12"],
+            ["Tríceps", "3 × 12"],
+            ["Elevaciones laterales", "3 × 15"],
+            ["Plancha", "3 × 30–45 seg"],
+            ["Crunch inverso", "3 × 15"]
+        ],
+
+        sábado: [
+            ["Caminata rápida", "45–60 min"],
+            ["Bicicleta / elíptica", "20–30 min opcional"]
+        ],
+
+        domingo: [
+            ["Descanso", "Recuperación"],
+            ["Caminata suave", "20–30 min opcional"]
+        ]
+    };
+
+
+    const days = [
+        "domingo",
+        "lunes",
+        "martes",
+        "miércoles",
+        "jueves",
+        "viernes",
+        "sábado"
+    ];
+
+
+    let selectedMealDay = days[new Date().getDay()];
+    let selectedExerciseDay = days[new Date().getDay()];
+
+
+    /* ==============================
+       NAVEGACIÓN
+    ============================== */
+
+    function showPage(pageId, button) {
+
+        document.querySelectorAll(".page").forEach(page => {
+            page.classList.remove("active");
+        });
+
+        document.getElementById(pageId).classList.add("active");
+
+        document.querySelectorAll(".nav-btn").forEach(btn => {
+            btn.classList.remove("active");
+        });
+
+        button.classList.add("active");
+    }
+
+
+    /* ==============================
+       FECHA
+    ============================== */
+
+    function updateDate() {
+
+        const date = new Date();
+
+        const text = date.toLocaleDateString("es-PA", {
+            weekday: "long",
+            day: "numeric",
+            month: "long"
+        });
+
+        document.getElementById("todayDate").textContent =
+            text.charAt(0).toUpperCase() + text.slice(1);
+    }
+
+
+    /* ==============================
+       AYUNO
+    ============================== */
+
+    function getSettings() {
+
+        return {
+            start: localStorage.getItem("fastStart") || "21:00",
+            end: localStorage.getItem("fastEnd") || "13:00"
+        };
+    }
+
+
+    function timeToMinutes(time) {
+
+        const parts = time.split(":");
+
+        return parseInt(parts[0]) * 60 + parseInt(parts[1]);
+    }
+
+
+    function getFastingInfo() {
+
+        const settings = getSettings();
+
+        const start = timeToMinutes(settings.start);
+        const end = timeToMinutes(settings.end);
+
+        const now = new Date();
+
+        const current =
+            now.getHours() * 60 +
+            now.getMinutes() +
+            now.getSeconds() / 60;
+
+        let fasting = false;
+        let elapsed;
+        let duration;
+        let remaining;
+
+        /*
+         * Ejemplo:
+         * Inicio 21:00
+         * Fin 13:00
+         *
+         * El ayuno cruza la medianoche.
+         */
+
+        if (start > end) {
+
+            duration = (1440 - start) + end;
+
+            if (current >= start || current < end) {
+
+                fasting = true;
+
+                if (current >= start) {
+                    elapsed = current - start;
+                } else {
+                    elapsed = (1440 - start) + current;
+                }
+
+                remaining = duration - elapsed;
+
+            } else {
+
+                fasting = false;
+
+                elapsed = current - end;
+                duration = 1440 - duration;
+                remaining = duration - elapsed;
+            }
+
+        } else {
+
+            duration = end - start;
+
+            if (current >= start && current < end) {
+
+                fasting = true;
+                elapsed = current - start;
+                remaining = duration - elapsed;
+
+            } else {
+
+                fasting = false;
+
+                let eatingDuration;
+
+                if (current >= end) {
+                    eatingDuration = current - end;
+                } else {
+                    eatingDuration = (1440 - end) + current;
+                }
+
+                remaining = 0;
+                elapsed = eatingDuration;
+            }
+        }
+
+        return {
+            fasting,
+            remaining,
+            elapsed,
+            duration,
+            start,
+            end
+        };
+    }
+
+
+    function formatTime(seconds) {
+
+        seconds = Math.max(0, Math.floor(seconds));
+
+        const hours = Math.floor(seconds / 3600);
+
+        const minutes =
+            Math.floor((seconds % 3600) / 60);
+
+        const secs =
+            seconds % 60;
+
+        return String(hours).padStart(2, "0") + ":" +
+               String(minutes).padStart(2, "0") + ":" +
+               String(secs).padStart(2, "0");
+    }
+
+
+    function formatTime12(time) {
+
+        let [hour, minute] = time.split(":").map(Number);
+
+        const suffix = hour >= 12 ? "p. m." : "a. m.";
+
+        hour = hour % 12;
+
+        if (hour === 0) {
+            hour = 12;
+        }
+
+        return `${hour}:${String(minute).padStart(2, "0")} ${suffix}`;
+    }
+
+
+    function updateFasting() {
+
+        const info = getFastingInfo();
+
+        const status =
+            document.getElementById("fastingStatus");
+
+        const timer =
+            document.getElementById("timer");
+
+        const label =
+            document.getElementById("timerLabel");
+
+        const progress =
+            document.getElementById("fastProgress");
+
+        const settings = getSettings();
+
+        if (info.fasting) {
+
+            status.textContent = "🌙 AYUNANDO";
+
+            timer.textContent =
+                formatTime(info.remaining * 60);
+
+            label.textContent =
+                "Tiempo restante de ayuno";
+
+            const percent =
+                ((info.duration - info.remaining) /
+                info.duration) * 100;
+
+            progress.style.width =
+                Math.min(100, Math.max(0, percent)) + "%";
+
+        } else {
+
+            status.textContent = "☀️ VENTANA DE COMIDA";
+
+            /*
+             * Calculamos cuánto falta para
+             * que vuelva a comenzar el ayuno.
+             */
+
+            const now = new Date();
+
+            const current =
+                now.getHours() * 60 +
+                now.getMinutes() +
+                now.getSeconds() / 60;
+
+            const start = info.start;
+
+            let untilStart;
+
+            if (current < start) {
+                untilStart = start - current;
+            } else {
+                untilStart = 1440 - current + start;
+            }
+
+            timer.textContent =
+                formatTime(untilStart * 60);
+
+            label.textContent =
+                "Tiempo hasta comenzar el ayuno";
+
+            progress.style.width = "0%";
+        }
+
+        document.getElementById("fastStart").textContent =
+            formatTime12(settings.start);
+
+        document.getElementById("fastEnd").textContent =
+            formatTime12(settings.end);
+
+        updateNextEvent();
+    }
+
+
+    /* ==============================
+       PRÓXIMO EVENTO
+    ============================== */
+
+    function updateNextEvent() {
+
+        const settings = getSettings();
+
+        const now = new Date();
+
+        const current =
+            now.getHours() * 60 +
+            now.getMinutes();
+
+        const start = timeToMinutes(settings.start);
+        const end = timeToMinutes(settings.end);
+
+        let nextTime;
+        let title;
+        let icon;
+
+        if (current >= 0 && current < end) {
+
+            nextTime = end;
+            title = "Termina el ayuno";
+            icon = "🍽️";
+
+        } else if (current >= end && current < 19 * 60) {
+
+            nextTime = 19 * 60;
+            title = "Cena ligera";
+            icon = "🥗";
+
+        } else {
+
+            nextTime = start;
+            title = "Comienza tu ayuno";
+            icon = "🌙";
+        }
+
+        document.getElementById("nextIcon").textContent = icon;
+        document.getElementById("nextTitle").textContent = title;
+
+        if (title === "Comienza tu ayuno") {
+            document.getElementById("nextTime").textContent =
+                formatTime12(settings.start);
+        } else if (title === "Termina el ayuno") {
+            document.getElementById("nextTime").textContent =
+                formatTime12(settings.end);
+        } else {
+            document.getElementById("nextTime").textContent =
+                "7:00 p. m.";
+        }
+    }
+
+
+    /* ==============================
+       NOTIFICACIONES
+    ============================== */
+
+    async function enableNotifications() {
+
+        if (!("Notification" in window)) {
+
+            showToast(
+                "Tu navegador no permite notificaciones."
+            );
+
+            return;
+        }
+
+        const permission =
+            await Notification.requestPermission();
+
+        if (permission === "granted") {
+
+            localStorage.setItem(
+                "notifications",
+                "enabled"
+            );
+
+            showToast(
+                "🔔 Notificaciones activadas."
+            );
+
+            new Notification(
+                "Ayuno 16:8",
+                {
+                    body:
+                        "Las notificaciones de tu ayuno están activadas."
+                }
+            );
+
+        } else {
+
+            showToast(
+                "Debes permitir las notificaciones en el navegador."
+            );
+        }
+    }
+
+
+    function checkNotifications() {
+
+        if (Notification.permission !== "granted") {
+            return;
+        }
+
+        const now = new Date();
+
+        const hour =
+            now.getHours();
+
+        const minute =
+            now.getMinutes();
+
+        const today =
+            now.toISOString().slice(0, 10);
+
+        const settings = getSettings();
+
+        const startParts =
+            settings.start.split(":");
+
+        const endParts =
+            settings.end.split(":");
+
+        const startHour =
+            Number(startParts[0]);
+
+        const startMinute =
+            Number(startParts[1]);
+
+        const endHour =
+            Number(endParts[0]);
+
+        const endMinute =
+            Number(endParts[1]);
+
+
+        /* INICIO DEL AYUNO */
+
+        if (
+            hour === startHour &&
+            minute === startMinute
+        ) {
+
+            const key =
+                "fast-start-" + today;
+
+            if (!localStorage.getItem(key)) {
+
+                localStorage.setItem(key, "1");
+
+                new Notification(
+                    "🌙 Es hora de comenzar tu ayuno",
+                    {
+                        body:
+                            "Tu ayuno de 16 horas comienza ahora. El cronómetro ya está activo."
+                    }
+                );
+
+                showToast(
+                    "🌙 Comenzó tu ayuno de 16 horas."
+                );
+            }
+        }
+
+
+        /* FIN DEL AYUNO */
+
+        if (
+            hour === endHour &&
+            minute === endMinute
+        ) {
+
+            const key =
+                "fast-end-" + today;
+
+            if (!localStorage.getItem(key)) {
+
+                localStorage.setItem(key, "1");
+
+                new Notification(
+                    "🎉 Tu ayuno terminó",
+                    {
+                        body:
+                            "Ya terminó tu ayuno. Puedes comenzar tu ventana de alimentación."
+                    }
+                );
+
+                showToast(
+                    "🎉 Terminó tu ayuno."
+                );
+            }
+        }
+    }
+
+
+    /* ==============================
+       COMIDAS
+    ============================== */
+
+    function renderMealDays() {
+
+        const container =
+            document.getElementById("mealDays");
+
+        container.innerHTML = "";
+
+        days.slice(1).concat(["domingo"]).forEach(day => {
+
+            const button =
+                document.createElement("button");
+
+            button.className =
+                "day-btn " +
+                (day === selectedMealDay ? "active" : "");
+
+            button.textContent =
+                day.substring(0, 3)
+                    .charAt(0)
+                    .toUpperCase() +
+                day.substring(1, 3);
+
+            button.onclick = () => {
+
+                selectedMealDay = day;
+
+                renderMealDays();
+                renderMealList();
+            };
+
+            container.appendChild(button);
+        });
+    }
+
+
+    function renderMealList() {
+
+        const container =
+            document.getElementById("mealList");
+
+        container.innerHTML = "";
+
+        meals[selectedMealDay].forEach(
+            (meal, index) => {
+
+                const key =
+                    `meal-${selectedMealDay}-${index}`;
+
+                const checked =
+                    localStorage.getItem(key) === "true";
+
+                container.innerHTML += `
+
+                    <div class="meal">
+
+                        <div class="meal-time">
+                            ${meal[0]}
+                        </div>
+
+                        <div class="meal-content">
+                            <h3>${meal[1]}</h3>
+                            <p>${meal[2]}</p>
+                        </div>
+
+                        <input
+                            class="check"
+                            type="checkbox"
+                            ${checked ? "checked" : ""}
+                            onchange="saveMealCheck('${key}', this.checked)"
+                        >
+
+                    </div>
+                `;
+            }
+        );
+    }
+
+
+    function renderHomeMeals() {
+
+        const today =
+            days[new Date().getDay()];
+
+        const container =
+            document.getElementById("homeMeals");
+
+        container.innerHTML = "";
+
+        meals[today].forEach(
+            (meal, index) => {
+
+                const key =
+                    `home-meal-${today}-${index}`;
+
+                const checked =
+                    localStorage.getItem(key) === "true";
+
+                container.innerHTML += `
+
+                    <div class="meal">
+
+                        <div class="meal-time">
+                            ${meal[0]}
+                        </div>
+
+                        <div class="meal-content">
+                            <h3>${meal[1]}</h3>
+                            <p>${meal[2]}</p>
+                        </div>
+
+                        <input
+                            class="check"
+                            type="checkbox"
+                            ${checked ? "checked" : ""}
+                            onchange="saveMealCheck('${key}', this.checked)"
+                        >
+
+                    </div>
+                `;
+            }
+        );
+    }
+
+
+    function saveMealCheck(key, value) {
+
+        localStorage.setItem(key, value);
+    }
+
+
+    /* ==============================
+       EJERCICIOS
+    ============================== */
+
+    function renderExerciseDays() {
+
+        const container =
+            document.getElementById("exerciseDays");
+
+        container.innerHTML = "";
+
+        days.slice(1).concat(["domingo"]).forEach(day => {
+
+            const button =
+                document.createElement("button");
+
+            button.className =
+                "day-btn " +
+                (day === selectedExerciseDay ? "active" : "");
+
+            button.textContent =
+                day.substring(0, 3)
+                    .charAt(0)
+                    .toUpperCase() +
+                day.substring(1, 3);
+
+            button.onclick = () => {
+
+                selectedExerciseDay = day;
+
+                renderExerciseDays();
+                renderExerciseList();
+            };
+
+            container.appendChild(button);
+        });
+    }
+
+
+    function renderExerciseList() {
+
+        const container =
+            document.getElementById("exerciseList");
+
+        container.innerHTML = "";
+
+        exercises[selectedExerciseDay].forEach(
+            (exercise, index) => {
+
+                const key =
+                    `exercise-${selectedExerciseDay}-${index}`;
+
+                const checked =
+                    localStorage.getItem(key) === "true";
+
+                container.innerHTML += `
+
+                    <div class="exercise">
+
+                        <div>
+                            <h3>${exercise[0]}</h3>
+                            <p>${exercise[1]}</p>
+                        </div>
+
+                        <input
+                            class="check"
+                            type="checkbox"
+                            ${checked ? "checked" : ""}
+                            onchange="saveExerciseCheck('${key}', this.checked)"
+                        >
+
+                    </div>
+                `;
+            }
+        );
+    }
+
+
+    function saveExerciseCheck(key, value) {
+
+        localStorage.setItem(key, value);
+    }
+
+
+    /* ==============================
+       AGUA
+    ============================== */
+
+    function getWater() {
+
+        const date =
+            new Date().toISOString().slice(0, 10);
+
+        const savedDate =
+            localStorage.getItem("waterDate");
+
+        if (savedDate !== date) {
+
+            localStorage.setItem("waterDate", date);
+            localStorage.setItem("water", "0");
+
+            return 0;
+        }
+
+        return Number(
+            localStorage.getItem("water") || 0
+        );
+    }
+
+
+    function updateWater() {
+
+        const water =
+            getWater();
+
+        document.getElementById("waterCount")
+            .textContent = water;
+
+        document.getElementById("waterProgress")
+            .style.width =
+            Math.min(100, water * 10) + "%";
+    }
+
+
+    function addWater() {
+
+        let water =
+            getWater();
+
+        if (water < 10) {
+            water++;
+        }
+
+        localStorage.setItem(
+            "water",
+            water
+        );
+
+        updateWater();
+    }
+
+
+    function removeWater() {
+
+        let water =
+            getWater();
+
+        if (water > 0) {
+            water--;
+        }
+
+        localStorage.setItem(
+            "water",
+            water
+        );
+
+        updateWater();
+    }
+
+
+    /* ==============================
+       PESO Y PROGRESO
+    ============================== */
+
+    function loadProgress() {
+
+        const start =
+            Number(
+                localStorage.getItem("startWeight") || 160
+            );
+
+        const current =
+            Number(
+                localStorage.getItem("currentWeight") || start
+            );
+
+        const goal =
+            Number(
+                localStorage.getItem("goalWeight") || 140
+            );
+
+        document.getElementById("startWeight")
+            .textContent = start;
+
+        document.getElementById("currentWeight")
+            .textContent = current;
+
+        document.getElementById("goalWeight")
+            .textContent = goal;
+
+        document.getElementById("inputStart")
+            .value = start;
+
+        document.getElementById("inputGoal")
+            .value = goal;
+
+        const total =
+            start - goal;
+
+        const lost =
+            start - current;
+
+        let percent = 0;
+
+        if (total > 0) {
+            percent =
+                (lost / total) * 100;
+        }
+
+        percent =
+            Math.min(100, Math.max(0, percent));
+
+        document.getElementById("goalFill")
+            .style.width = percent + "%";
+
+        const remaining =
+            Math.max(0, current - goal);
+
+        document.getElementById("remainingText")
+            .textContent =
+            remaining.toFixed(1) +
+            " lb para llegar a tu meta";
+    }
+
+
+    function saveWeight() {
+
+        const value =
+            Number(
+                document.getElementById("newWeight").value
+            );
+
+        if (!value || value <= 0) {
+
+            showToast(
+                "Escribe un peso válido."
+            );
+
+            return;
+        }
+
+        localStorage.setItem(
+            "currentWeight",
+            value
+        );
+
+        loadProgress();
+
+        document.getElementById("newWeight")
+            .value = "";
+
+        showToast(
+            "Peso actualizado."
+        );
+    }
+
+
+    function saveGoal() {
+
+        const start =
+            Number(
+                document.getElementById("inputStart").value
+            );
+
+        const goal =
+            Number(
+                document.getElementById("inputGoal").value
+            );
+
+        if (
+            !start ||
+            !goal ||
+            start <= 0 ||
+            goal <= 0
+        ) {
+
+            showToast(
+                "Introduce valores válidos."
+            );
+
+            return;
+        }
+
+        localStorage.setItem(
+            "startWeight",
+            start
+        );
+
+        localStorage.setItem(
+            "goalWeight",
+            goal
+        );
+
+        if (!localStorage.getItem("currentWeight")) {
+
+            localStorage.setItem(
+                "currentWeight",
+                start
+            );
+        }
+
+        loadProgress();
+
+        showToast(
+            "🎯 Meta guardada."
+        );
+    }
+
+
+    /* ==============================
+       AJUSTES
+    ============================== */
+
+    function loadSettings() {
+
+        const settings =
+            getSettings();
+
+        document.getElementById("fastStartInput")
+            .value = settings.start;
+
+        document.getElementById("fastEndInput")
+            .value = settings.end;
+    }
+
+
+    function saveFastSettings() {
+
+        const start =
+            document.getElementById("fastStartInput").value;
+
+        const end =
+            document.getElementById("fastEndInput").value;
+
+        if (!start || !end) {
+
+            showToast(
+                "Selecciona ambos horarios."
+            );
+
+            return;
+        }
+
+        localStorage.setItem(
+            "fastStart",
+            start
+        );
+
+        localStorage.setItem(
+            "fastEnd",
+            end
+        );
+
+        updateFasting();
+
+        showToast(
+            "⏱️ Horario de ayuno actualizado."
+        );
+    }
+
+
+    /* ==============================
+       MENSAJES
+    ============================== */
+
+    function showToast(message) {
+
+        const toast =
+            document.getElementById("toast");
+
+        toast.textContent = message;
+
+        toast.classList.add("show");
+
+        setTimeout(() => {
+            toast.classList.remove("show");
+        }, 3000);
+    }
+
+
+    /* ==============================
+       SERVICE WORKER
+    ============================== */
+
+    if ("serviceWorker" in navigator) {
+
+        window.addEventListener(
+            "load",
+            () => {
+
+                navigator.serviceWorker
+                    .register("sw.js")
+                    .then(() => {
+                        console.log(
+                            "Service Worker registrado."
+                        );
+                    })
+                    .catch(error => {
+                        console.log(
+                            "Error Service Worker:",
+                            error
+                        );
+                    });
+            }
+        );
+    }
+
+
+    /* ==============================
+       INICIO
+    ============================== */
+
+    updateDate();
+
+    loadSettings();
+
+    loadProgress();
+
+    updateWater();
+
+    renderMealDays();
+    renderMealList();
+
+    renderExerciseDays();
+    renderExerciseList();
+
+    renderHomeMeals();
+
+    updateFasting();
+
+    setInterval(() => {
+
+        updateFasting();
+        updateWater();
+        checkNotifications();
+
+    }, 1000);
+
+</script>
+
+</body>
+</html>

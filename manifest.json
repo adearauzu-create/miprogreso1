@@ -1,0 +1,11 @@
+{
+    "name": "Mi Progreso - Adelith",
+    "short_name": "Mi Progreso",
+    "description": "Aplicación personal de ayuno, alimentación, ejercicio y progreso.",
+    "start_url": "./index.html",
+    "display": "standalone",
+    "background_color": "#eef8fc",
+    "theme_color": "#8ecae6",
+    "orientation": "portrait",
+    "icons": []
+}
